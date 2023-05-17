@@ -172,7 +172,7 @@ class Ulasan_Sementara extends Model
 
     public function crawlIg($start, $end)
     {
-        $senig = [];
+        $ig = [];
         $api = new Client();
         $url = "http://127.0.0.1:5000/ig";
         $response = $api->request('POST',$url, ["json"=>['start'=>$start, 'end'=>$end]]);
@@ -190,7 +190,31 @@ class Ulasan_Sementara extends Model
             }
         }
        
-        return $senig;
+        return $ig;
+    }
+
+    public function crawlTw($start, $end)
+    {
+        $tw = [];
+        $api = new Client();
+        $url = "http://127.0.0.1:5000/twitter";
+
+        $response = $api->request('POST',$url, ["json"=>['start'=>$start, 'end'=>$end]]);
+
+        if($response->getStatusCode() == 200)
+        {
+            $body = json_decode($response->getBody());
+
+            foreach($body->comments as $key => $value)
+            {
+                array_push($tw,[                    
+                    'ulasan' =>  $value->text,
+                    'tanggal' =>  $value->time
+                ]);
+            }
+        }
+       
+        return $tw;
     }
 
     public function insertDB($data, $type)

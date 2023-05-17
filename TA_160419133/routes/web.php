@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome', 'SentimentController@index');
-// });
 Route::get('/', 'SentimentController@index')->middleware('auth');
 
 Route::get('/crawling','CrawlingController@index')->middleware('auth');
@@ -35,6 +31,10 @@ Route::get('/deleteT/{start}/{end}','UlasanController@deleteTanggal')->middlewar
 Route::resource('ulasan','UlasanController')->middleware('auth');
 Route::resource('crawl','CrawlingController')->middleware('auth');
 Route::resource('asentimen','AnalysisController')->middleware('auth');
+Route::resource('user','UserController')->middleware('auth');
+
+Route::get('set','UserController@edit')->middleware('auth');
+
 
 Route::post('/modalEdit','UlasanController@editShow')->middleware('auth');
 Route::post('/modalEdit1','AnalysisController@editShow')->middleware('auth');

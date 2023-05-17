@@ -46,4 +46,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public static function editUser($id, $name, $email, $pass)
+    {
+        set_time_limit(6000);    
+        
+        $data = User::find($id);
+        
+        $data->name = $name;
+        $data->email = $email;
+        $data->password = $pass;        
+
+        $data->save();
+    }
 }

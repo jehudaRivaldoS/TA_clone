@@ -46,7 +46,7 @@
         <div class="header-inner">
             <!-- BEGIN LOGO -->
             <div class="page-logo">
-                <h4 style="color:#ffffff">Hello Username</h4>
+                <h4 style="color:#ffffff">Hello {{ $username }}</h4>
                 <br>
             </div>
             <!-- END LOGO -->
@@ -107,12 +107,12 @@
                     <li class="start active ">
                         <a href="/manage">
                             <i class="icon-briefcase"></i>
-                            <span class="title">Manage Data</span>
+                            <span class="title">Riwayat Data</span>
                             <span class="selected"></span>
                         </a>
                     </li>
                     <li class="start active ">
-                        <a href="/setting">
+                        <a href="{{ url("set") }}">
                             <i class="icon-settings"></i>
                             <span class="title">Setting</span>
                             <span class="selected"></span>

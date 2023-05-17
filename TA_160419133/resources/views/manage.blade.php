@@ -4,7 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 <head>
-    <title>Manage Data</title>
+    <title>Riwayat Data</title>
 
     <style>
         th {
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <h1 class="mt-4"><strong>MANAGE DATA</strong></h1>
+    <h1 class="mt-4"><strong>RIWAYAT DATA</strong></h1>
     <h3><strong>Data yang tersimpan di database : </strong></h3><br>
 
     @if ($data->isEmpty())
