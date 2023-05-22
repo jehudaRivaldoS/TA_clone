@@ -35,24 +35,31 @@ class Ulasan extends Model
         $w = Ulasan::all()->where('wahana', '=', '1')->count();
 
 
-        $all = $positif +  $negatif;
+        if($all === 0)
+        {
+            $count['all'] = 0;
+        }
+        else
+        {
+            $all = $positif +  $negatif;
 
-        $posper = ($positif/$all) * 100;
-        $negper = ($negatif/$all) * 100;
-             
-        $count['pos'] = $positif;
-        $count['neg'] = $negatif;
+            $posper = ($positif/$all) * 100;
+            $negper = ($negatif/$all) * 100;
+                
+            $count['pos'] = $positif;
+            $count['neg'] = $negatif;
 
-        $count['pp'] = round($posper,1);
-        $count['np'] = round($negper,1);
+            $count['pp'] = round($posper,1);
+            $count['np'] = round($negper,1);
 
-        $count['p'] = $p;
-        $count['w'] = $w;
-        $count['k'] = $k;
-        $count['f'] = $f;
-        $count['n'] = $n;
+            $count['p'] = $p;
+            $count['w'] = $w;
+            $count['k'] = $k;
+            $count['f'] = $f;
+            $count['n'] = $n;
 
-        $count['all'] = $all;
+            $count['all'] = $all;
+        }
 
 
         return $count;
@@ -64,8 +71,7 @@ class Ulasan extends Model
         set_time_limit(6000);    
 
         foreach ($data as $key)
-        {            
-            $checks = Ulasan::where('kategori_sentimen', $key->komentar)->count();
+        {               
             $us = new Ulasan();
             $us->komentar = $key->komentar;
             $us->tanggal = $key->tanggal;
@@ -75,11 +81,8 @@ class Ulasan extends Model
             $us->wahana = $key->wahana;
             $us->kuliner = $key->kuliner;            
             $us->aplikasi_id = $key->aplikasi_id;
-
-            if ($checks === 0)
-            {
-                $us->save();
-            }            
+            
+            $us->save();                      
         }
     }
 

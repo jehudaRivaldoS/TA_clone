@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 use App\Models\Ulasan_Sementara;
 
 class CrawlingController extends Controller
@@ -31,6 +32,7 @@ class CrawlingController extends Controller
      */
     public function create($start, $end, $apl)
     {
+        $api = new Client();
         set_time_limit(6000);
         $us = new Ulasan_Sementara();
         $us->deleteDB();
@@ -46,13 +48,13 @@ class CrawlingController extends Controller
         if(in_array('ig', $aplikasi))
         {
             $insta = 1;
-            $ig = $us->crawlIg($start, $end);
+            $ig = $us->crawlIg($start, $end, $api);
             $us->insertDB($ig, $insta);
         }
         if(in_array('twitter', $aplikasi))
         {
             $twi = 2;
-            $tw = $us->crawlTw($start, $end);
+            $tw = $us->crawlTw($start, $end, $api);
             $us->insertDB($tw,$twi);
         }        
     }    

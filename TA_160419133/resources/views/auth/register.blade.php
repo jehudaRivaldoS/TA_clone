@@ -1,6 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <meta name="MobileOptimized" content="320">
+    <!-- BEGIN THEME STYLES -->
+    <link href="assets/css/style-conquer.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+</head>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

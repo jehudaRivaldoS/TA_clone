@@ -55,30 +55,40 @@
 </style>
 
 <body>
-    <h1 class="mt-4"><strong>CRAWLING DATA</strong></h1>
-    <h2 class="mt-4">Sumber : </h2>
-    <input type="checkbox" id="aplikasi1" name="aplikasi[]" value="googlem" checked><label for="myCheckbox">&nbsp;
-        Google
-        Maps
-        Review</label><br>
-    <input type="checkbox" id="aplikasi2" name="aplikasi[]" value="ig"><label for="myCheckbox"> &nbsp;
-        Instagram</label><br>
-    <input type="checkbox" id="aplikasi3" name="aplikasi[]" value="twitter"><label for="myCheckbox">&nbsp;
-        Twitter</label><br>
+    <h1 class="mt-4"><strong>CRAWLING DATA</strong></h1><br>
+    <h4 class="mt-4"><strong>Sumber : </strong></h4>
+    <div class="row">
+        <div class="col-md-12">
+            <input type="checkbox" id="aplikasi1" name="aplikasi[]" value="googlem" checked><label
+                for="myCheckbox">&nbsp;
+                Google
+                Maps
+                Review</label><br>
+            <input type="checkbox" id="aplikasi2" name="aplikasi[]" value="ig"><label for="myCheckbox"> &nbsp;
+                Instagram</label><br>
+            <input type="checkbox" id="aplikasi3" name="aplikasi[]" value="twitter"><label for="myCheckbox">&nbsp;
+                Twitter</label><br>
 
-    <h3>Masukkan Tanggal : </h3>
-    <label for="mulai">Start Date : </label>
-    <input type="date" id="mulai" name="mulai" value="">
-
-    <label for="akhir"> &nbsp;&nbsp;&nbsp;End Date : </label>
-    <input type="date" id="akhir" name="akhir" value=""><br><br>
-
-    <button type="submit" id="startcrawl" class="loading">START CRAWLING</button>
-
-    <h3><strong>Data Hasil Crawling : </strong></h3><br>
-    <div id="loader" style="display:none;">
-        <div class="loader"></div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4><strong>Masukkan Tanggal : </strong></h4>
+            <label for="mulai">Start Date : </label>
+            <input type="date" id="mulai" name="mulai" value="">
+
+            <label for="akhir"> &nbsp;&nbsp;&nbsp;End Date : </label>
+            <input type="date" id="akhir" name="akhir" value=""><br><br>
+
+            <button type="submit" id="startcrawl" class="btn btn-primary">START CRAWLING</button>
+
+            <h3><strong>Data Hasil Crawling : </strong></h3><br>
+            <div id="loader" style="display:none;">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+
 
     @if ($data->isEmpty())
     <h4>Belum ada data yang di crawling</h4>
@@ -153,9 +163,17 @@
                 </div>
             </div>
             @else
-            <a href="/analysis" id="btnanalysis" class="btn btn-success" style="background: rgb(0, 89, 255)
-        ">Start Analysis
-                Data</a><br><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <div style="text-align:left;">
+                        <a href="/analysis" id="btnanalysis" class="btn btn-info">Start Analysis
+                            Data</a>
+                        <a href="{{ route('destroy-all-data') }}" class="btn btn-danger"
+                            onclick="return confirm('Apakah Anda yakin ingin menghapus semua data crawling?')">Delete
+                            All Data</a>
+                    </div>
+                </div>
+            </div><br>
             <table class="table table-striped table-hover table-bordered" id="table_id">
                 <thead>
                     <tr>
@@ -207,42 +225,51 @@
         var aplikasi = $('input[name="aplikasi[]"]:checked').serializeArray().map(function(item) {
             return item.value;
         });
-        if (mulai == '' || akhir == '') {
-            alert('Silakan isi tanggal awal dan akhir.');
+        if(mulai > akhir)
+        {
+            alert('Tanggal Mulai harus lebih awal daripada tanggal akhir.');
             loader.hide();                
             overlay.remove();
-            return;
-            if (aplikasi.length == 0) {
-                alert('Silakan pilih aplikasi yang ingin di-crawl.');
-                loader.hide();                
-                overlay.remove();
-                return;
-            }            
         }
         else
         {
-            if (aplikasi.length == 0) {
-                alert('Silakan pilih aplikasi yang ingin di-crawl.');
+            if (mulai == '' || akhir == '') {
+                alert('Silakan isi tanggal awal dan akhir.');
                 loader.hide();                
                 overlay.remove();
                 return;
+                if (aplikasi.length == 0) {
+                    alert('Silakan pilih aplikasi yang ingin di-crawl.');
+                    loader.hide();                
+                    overlay.remove();
+                    return;
+                }            
             }
-            else 
-            {                
-                var url_api = 'crawling/'+mulai+'/'+akhir+'/'+aplikasi;
- 
-                $.ajax({
-                    type: 'GET',
-                    url: url_api,
-                    success: function (data) {
-                        $("#startcrawl").removeClass('loading');
-                        location.reload();
-                        loader.hide();                
-                        overlay.remove();
-                    }
-                });                        
-            }
-        }        
+            else
+            {
+                if (aplikasi.length == 0) {
+                    alert('Silakan pilih aplikasi yang ingin di-crawl.');
+                    loader.hide();                
+                    overlay.remove();
+                    return;
+                }
+                else 
+                {                
+                    var url_api = 'crawling/'+mulai+'/'+akhir+'/'+aplikasi;
+    
+                    $.ajax({
+                        type: 'GET',
+                        url: url_api,
+                        success: function (data) {
+                            $("#startcrawl").removeClass('btn btn-primary');
+                            location.reload();
+                            loader.hide();                
+                            overlay.remove();
+                        }
+                    });                        
+                }
+            }        
+        }
     });
 
     $('#btnanalysis').on('click',function (){

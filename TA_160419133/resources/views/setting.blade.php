@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Masukan Password Baru:</label>
+            <label for="password">Masukan Password Lama/Baru:</label>
             <input type="text" name="password" class="form-control" required>
         </div>
 

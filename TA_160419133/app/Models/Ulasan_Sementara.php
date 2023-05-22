@@ -159,7 +159,7 @@ class Ulasan_Sementara extends Model
             $tgl = $v['tanggal'];
             if(!preg_match("/k8MTF/",$helper))
             {
-                if($end >= $tgl){
+                if($end >= $tgl && $start <= $tgl){
                     array_push($sen,[                    
                         'ulasan' => $helper,
                         'tanggal' => $tgl
@@ -170,10 +170,9 @@ class Ulasan_Sementara extends Model
         return $sen;
     }
 
-    public function crawlIg($start, $end)
+    public function crawlIg($start, $end, $api)
     {
-        $ig = [];
-        $api = new Client();
+        $ig = [];        
         $url = "http://127.0.0.1:5000/ig";
         $response = $api->request('POST',$url, ["json"=>['start'=>$start, 'end'=>$end]]);
 
@@ -183,7 +182,7 @@ class Ulasan_Sementara extends Model
 
             foreach($body->comments as $key => $value)
             {
-                array_push($senig,[                    
+                array_push($ig,[                    
                     'ulasan' =>  $value->text,
                     'tanggal' =>  $value->time
                 ]);
@@ -193,10 +192,9 @@ class Ulasan_Sementara extends Model
         return $ig;
     }
 
-    public function crawlTw($start, $end)
+    public function crawlTw($start, $end, $api)
     {
-        $tw = [];
-        $api = new Client();
+        $tw = [];        
         $url = "http://127.0.0.1:5000/twitter";
 
         $response = $api->request('POST',$url, ["json"=>['start'=>$start, 'end'=>$end]]);
@@ -225,7 +223,6 @@ class Ulasan_Sementara extends Model
         {
             $komentar = addslashes($value['ulasan']);
             $us = new Ulasan_Sementara();
-            // $us->komentar = '"'.$komentar.'"';
             $us->komentar = $komentar;
             $us->tanggal = $value['tanggal'];
             $us->aplikasi_id = $type;

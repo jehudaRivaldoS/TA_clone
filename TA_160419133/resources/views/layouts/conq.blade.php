@@ -146,7 +146,7 @@
     <!-- BEGIN FOOTER -->
     <div class="footer">
         <div class="footer-inner">
-            2013 &copy; Conquer by keenthemes.
+            2023 &copy; Analisis Sentimen Sumber Gempong.
         </div>
         <div class="footer-tools">
             <span class="go-top">
@@ -195,7 +195,7 @@
     <script src="assets/scripts/tasks.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script> --}}
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js">
     </script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
