@@ -86,6 +86,8 @@ class UlasanController extends Controller
         $k = $re->get('kuliner');
         
         Ulasan::edit($id, $ka, $f, $p, $w, $k);
+
+        $re->session()->flash('success', 'Berhasil melakukan update data');
         
         return redirect()->back();
     }
@@ -96,17 +98,19 @@ class UlasanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $re, $id)
     {
         $data = Ulasan::find($id);        
         
         $data->delete();
+        $re->session()->flash('success', 'Berhasil menghapus 1 data');
         return redirect()->back();
     }
 
-    public function deleteTanggal($start, $end)
+    public function deleteTanggal(Request $re, $start, $end)
     {
         Ulasan::whereBetween('tanggal', [$start, $end])->delete();
+        $re->session()->flash('success', 'Berhasil menghapus beberapa data');
         return redirect()->back();
     }
     public function editShow(Request $request)

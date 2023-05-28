@@ -1,6 +1,12 @@
 @extends('layouts.conq')
 @section('content')
 
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
@@ -15,12 +21,12 @@
     </div>
     @else
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="tools">
                 <canvas id="diagramPie" style="width:100%;max-width:600px"></canvas>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <br>
             <br>
             <h3><strong>Sentimen Saat ini</strong></h4>

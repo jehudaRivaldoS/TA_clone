@@ -31,7 +31,7 @@ class CrawlingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($start, $end, $apl)
-    {
+    {        
         $api = new Client();
         set_time_limit(6000);
         $us = new Ulasan_Sementara();
@@ -53,10 +53,11 @@ class CrawlingController extends Controller
         }
         if(in_array('twitter', $aplikasi))
         {
-            $twi = 2;
-            $tw = $us->crawlTw($start, $end, $api);
-            $us->insertDB($tw,$twi);
-        }        
+            // $twi = 2;
+            // $tw = $us->crawlTw($start, $end, $api);
+            // $us->insertDB($tw,$twi);
+        }
+        return redirect()->back();
     }    
 
     /**
@@ -108,6 +109,8 @@ class CrawlingController extends Controller
         $k = $re->get('kuliner');
         
         Ulasan_Sementara::edits($id, $ka, $f, $p, $w, $k);
+
+        $re->session()->flash('success', 'Berhasil melakukan update data');
         
         return redirect()->back();
     }
@@ -117,18 +120,20 @@ class CrawlingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(Request $re)
     {
         $us = new Ulasan_Sementara();
         $us->deleteDB();
+        $re->session()->flash('success', 'Berhasil menghapus data');
         
         return redirect()->back();
     }
-    public function deleteId($id)
+    public function deleteId(Request $re, $id)
     {
         $data = Ulasan_Sementara::find($id);
 
         $data->delete();
+        $re->session()->flash('success', 'Berhasil menghapus data');
         
         return redirect()->back();
     }

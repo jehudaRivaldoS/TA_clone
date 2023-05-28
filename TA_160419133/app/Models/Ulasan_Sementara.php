@@ -107,7 +107,7 @@ class Ulasan_Sementara extends Model
                         $tanggal_convert = date('Y-m-d',(strtotime ( '-1 minute' , strtotime ( date("Y-m-d") ) ) ));
     
                     }
-                    elseif($tanggal_split[0] == "sedetik"){
+                    elseif($tanggal_split[0] == "saja"){
                         $tanggal_convert = date('Y-m-d',(strtotime ( '-1 second' , strtotime ( date("Y-m-d") ) ) ));
     
                     }
@@ -159,7 +159,7 @@ class Ulasan_Sementara extends Model
             $tgl = $v['tanggal'];
             if(!preg_match("/k8MTF/",$helper))
             {
-                if($end >= $tgl && $start <= $tgl){
+                if($start <= $tgl&& $end >= $tgl ){
                     array_push($sen,[                    
                         'ulasan' => $helper,
                         'tanggal' => $tgl

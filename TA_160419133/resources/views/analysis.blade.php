@@ -1,6 +1,12 @@
 @extends('layouts.conq')
 @section('content')
 
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <head>
     <style>
         th {

@@ -8,6 +8,7 @@
     <title>Crawling Data</title>
 </head>
 
+
 <style>
     #overlay {
         position: fixed;
@@ -55,6 +56,11 @@
 </style>
 
 <body>
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <h1 class="mt-4"><strong>CRAWLING DATA</strong></h1><br>
     <h4 class="mt-4"><strong>Sumber : </strong></h4>
     <div class="row">
@@ -80,7 +86,7 @@
             <label for="akhir"> &nbsp;&nbsp;&nbsp;End Date : </label>
             <input type="date" id="akhir" name="akhir" value=""><br><br>
 
-            <button type="submit" id="startcrawl" class="btn btn-primary">START CRAWLING</button>
+            <button type="button" id="startcrawl" class="btn btn-primary">START CRAWLING</button>
 
             <h3><strong>Data Hasil Crawling : </strong></h3><br>
             <div id="loader" style="display:none;">
@@ -215,7 +221,8 @@
     }
 </script>
 <script>
-    $("#startcrawl").on('click',function (){
+    $("#startcrawl").on('click',function (e){
+        e.preventDefault(); 
         var loader = $("#loader");        
         var overlay = $("<div id='overlay'></div>");
         overlay.appendTo(document.body);

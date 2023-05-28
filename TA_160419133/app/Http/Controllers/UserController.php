@@ -81,6 +81,8 @@ class UserController extends Controller
         $pass = Hash::make($pas);  
         
         User::editUser($id, $name, $email, $pass);
+
+        $re->session()->flash('success', 'Akun berhasil diperbarui.');
         
         return redirect()->back();
     }

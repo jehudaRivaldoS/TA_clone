@@ -20,7 +20,7 @@ class AnalysisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $d = Ulasan_Sementara::all();
         $count = Ulasan_Sementara::all()->count();
@@ -31,10 +31,19 @@ class AnalysisController extends Controller
             if($c !== 0)
             {
                 Ulasan_Sementara::analysis($d);
-            }           
-        }      
-        $data = Ulasan_Sementara::all();
-
+                $request->session()->flash('success', 'Berhasil melakukan analisis');
+            }     
+            else
+            {
+                $request->session()->forget('success');
+            }      
+        }   
+        else
+        {
+            $request->session()->forget('success');
+        }     
+        $data = Ulasan_Sementara::all();   
+        
         return view('analysis', compact('data', 'count'));
     }
 
