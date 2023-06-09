@@ -67,27 +67,29 @@
 
 @section('js')
 <script>
-    var x = ["Positif {{ $count['pp'] }}%", "Negatif {{ $count['np'] }}%",];
+    @if ($count['all'] !== 0)
+    var x = ["Positif {{ $count['pp'] }}%", "Negatif {{ $count['np'] }}%"];
     var y = [{{ $count['pos'] }}, {{ $count['neg'] }}];
-    var warna = [
-    "#1a74e9",    
-    "#eb0000"
-    ];
+    var warna = ["#1a74e9", "#eb0000"];
 
     new Chart("diagramPie", {
-    type: "pie",
-    data: {
-        labels: x,
-        datasets: [{
-        backgroundColor: warna,
-        data: y
-        }]
-    },
-    options: {
-        title: {
-        display: true,            
-        }
-    }
-    });
+        type: "pie",
+        data: {
+            labels: x,
+            datasets: [
+            {
+                backgroundColor: warna,
+                data: y,
+            },
+            ],
+        },
+        options: {
+            title: {
+            display: true,
+            },
+        },
+    });           
+    @endif  
+      
 </script>
 @endsection

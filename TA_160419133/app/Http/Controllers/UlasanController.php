@@ -17,15 +17,26 @@ class UlasanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Ulasan::all();
+        $start = $request->input('start');
+        $end = $request->input('end');
 
+        if ($start && $end) {
+            $data = Ulasan::whereBetween('tanggal', [$start, $end])->get();
+        } else {
+            $start = null;
+            $end = null;
+            $data = Ulasan::all();
+        }
+        
         $u = new Ulasan();
-        $count = $u->createDiagram();
+        $count = $u->createDiagram($start, $end);
          
         return view('manage', compact('data', 'count'));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

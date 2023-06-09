@@ -11,10 +11,53 @@
 
 <head>
     <title>Riwayat Data</title>
-
     <style>
         th {
             text-align: center;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* warna hitam transparan */
+            z-index: 9999;
+            /* pastikan overlay di atas elemen lain */
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* lingkaran loader */
+            border-top: 16px solid #3498db;
+            /* lingkaran loader */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            /* animasi putar */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* atur posisi tengah */
+            position: fixed;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -29,7 +72,7 @@
     @else
     <div class="row">
         <div class="col-md-4">
-            <h3><strong>Jumlah Data Kategori :</strong></h3>
+            <h4><strong>Jumlah Data Kategori :</strong></h4>
             <h5>1. Pelayanan : {{ $count['p'] }} / {{ $count['all'] }}</h5>
             <h5>2. Fasilitas : {{ $count['f'] }} / {{ $count['all'] }}</h5>
             <h5>3. Kuliner : {{ $count['k'] }} / {{ $count['all'] }}</h5>
@@ -44,11 +87,31 @@
             <br>
             <br>
 
-            <h3><strong>Sentimen Saat ini</strong></h4>
-                <h4>1. Positif : {{ $count['pp'] }}%</h4>
-                <h4>2. Negatif : {{ $count['np'] }}%</h4>
+            <h4><strong>Sentimen Saat ini</strong></h4>
+            <h5>1. Positif : {{ $count['pp'] }}%</h5>
+            <h5>2. Negatif : {{ $count['np'] }}%</h5>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3><strong>Cari dengan Tanggal : </strong></h3>
+            <form action="{{ route('ulasan.index') }}" method="GET">
+                <label for="start">Tanggal Mulai:</label>
+                <input type="date" name="start" id="start" value="{{ request('start') }}">
+
+                <label for="end">- Tanggal Akhir:</label>
+                <input type="date" name="end" id="end" value="{{ request('end') }}">
+
+                <button type="submit" id="cari" class="btn btn-primary">Cari</button>
+            </form>
+            {{-- <form action="{{ route('export.excel') }}" method="GET">
+                <button type="submit">Download</button>
+            </form> --}}
+            <div id="loader" style="display:none;">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div><br>
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped table-hover table-bordered" id="table_id">
@@ -169,34 +232,63 @@
                 });  
             }            
         }
-    });
+    });    
 </script>
 <script>
+    @if ($count['all'] !== 0)
     var x = ["Positif {{ $count['pp'] }}%", "Negatif {{ $count['np'] }}%"];
     var y = [{{ $count['pos'] }}, {{ $count['neg'] }}];
     var warna = ["#1a74e9", "#eb0000"];
 
     new Chart("diagramPie", {
-    type: "pie",
-    data: {
-        labels: x,
-        datasets: [
-        {
-            backgroundColor: warna,
-            data: y,
+        type: "pie",
+        data: {
+            labels: x,
+            datasets: [
+            {
+                backgroundColor: warna,
+                data: y,
+            },
+            ],
         },
-        ],
-    },
-    options: {
-        title: {
-        display: true,
+        options: {
+            title: {
+            display: true,
+            },
         },
-    },
-    });
+    });           
+    @endif    
 </script>
 @endsection
 @section('script')
 <script>
-    $("#table_id").DataTable();     
+    $(document).ready(function() {
+        $('#table_id').DataTable( {
+            dom: 'Bfrltip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Export to Excel',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    }
+                },            
+                {
+                    extend: 'pdf',
+                    text: 'Export to PDF',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    }
+                }
+            ],         
+        });        
+    });
 </script>
 @endsection

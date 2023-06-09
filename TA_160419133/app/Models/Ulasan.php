@@ -19,21 +19,44 @@ class Ulasan extends Model
         return $this->belongsTo('App\Models\Aplikasi', 'aplikasi_id');
     }
 
-    public function createDiagram()
+    public function createDiagram($start,$end)
     {
-        $all = Ulasan::all()->count();
-        $n = Ulasan::where('fasilitas', 0)
-                ->where('pelayanan', 0)
-                ->where('kuliner', 0)
-                ->where('wahana', 0)
-                ->get()->count();
-        $positif = Ulasan::all()->where('kategori_sentimen', '=', '1')->count();
-        $negatif = Ulasan::all()->where('kategori_sentimen', '=', '0')->count();
-        $p = Ulasan::all()->where('pelayanan', '=', '1')->count();
-        $f = Ulasan::all()->where('fasilitas', '=', '1')->count();
-        $k = Ulasan::all()->where('kuliner', '=', '1')->count();
-        $w = Ulasan::all()->where('wahana', '=', '1')->count();
-
+        if(is_null($start) && is_null($end))
+        {
+            $all = Ulasan::all()->count();
+            $n = Ulasan::where('fasilitas', 0)
+                    ->where('pelayanan', 0)
+                    ->where('kuliner', 0)
+                    ->where('wahana', 0)
+                    ->get()->count();
+            $positif = Ulasan::all()->where('kategori_sentimen', '=', '1')->count();
+            $negatif = Ulasan::all()->where('kategori_sentimen', '=', '0')->count();
+            $p = Ulasan::all()->where('pelayanan', '=', '1')->count();
+            $f = Ulasan::all()->where('fasilitas', '=', '1')->count();
+            $k = Ulasan::all()->where('kuliner', '=', '1')->count();
+            $w = Ulasan::all()->where('wahana', '=', '1')->count();
+        }
+        else{
+            $all = Ulasan::whereBetween('tanggal', [$start, $end])->count();
+            $n = Ulasan::where('fasilitas', 0)
+                    ->where('pelayanan', 0)
+                    ->where('kuliner', 0)
+                    ->where('wahana', 0)
+                    ->whereBetween('tanggal', [$start, $end])
+                    ->get()->count();
+            $positif = Ulasan::all()
+                        ->where('kategori_sentimen', '=', '1')
+                        ->whereBetween('tanggal', [$start, $end])
+                        ->count();
+            $negatif = Ulasan::all()
+                        ->where('kategori_sentimen', '=', '0')
+                        ->whereBetween('tanggal', [$start, $end])
+                        ->count();
+            $p = Ulasan::all()->where('pelayanan', '=', '1')->whereBetween('tanggal', [$start, $end])->count();
+            $f = Ulasan::all()->where('fasilitas', '=', '1')->whereBetween('tanggal', [$start, $end])->count();
+            $k = Ulasan::all()->where('kuliner', '=', '1')->whereBetween('tanggal', [$start, $end])->count();
+            $w = Ulasan::all()->where('wahana', '=', '1')->whereBetween('tanggal', [$start, $end])->count();
+        }        
 
         if($all === 0)
         {
@@ -41,7 +64,21 @@ class Ulasan extends Model
         }
         else
         {
-            $all = $positif +  $negatif;
+            
+            if($positif == null)
+            {
+                $positif = 0;
+            }
+            if($negatif == null)
+            {
+                $negatif = 0;
+            }
+            // $all = $positif + $negatif;
+            $all = $positif + $negatif;
+            if($all == 0)
+            {
+                $all = 1;
+            }
 
             $posper = ($positif/$all) * 100;
             $negper = ($negatif/$all) * 100;

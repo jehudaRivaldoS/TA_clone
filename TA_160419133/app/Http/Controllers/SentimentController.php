@@ -19,8 +19,10 @@ class SentimentController extends Controller
      */
     public function index()
     {
+        $start = null;
+        $end = null;
         $u = new Ulasan();
-        $count = $u->createDiagram();
+        $count = $u->createDiagram($start, $end);
 
         return view('welcome', compact('count'));
     }
