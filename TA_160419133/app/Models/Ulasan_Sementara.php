@@ -105,12 +105,8 @@ class Ulasan_Sementara extends Model
                     }
                     elseif($tanggal_split[0] == "semenit"){
                         $tanggal_convert = date('Y-m-d',(strtotime ( '-1 minute' , strtotime ( date("Y-m-d") ) ) ));
-    
                     }
-                    elseif($tanggal_split[0] == "saja"){
-                        $tanggal_convert = date('Y-m-d',(strtotime ( '-1 second' , strtotime ( date("Y-m-d") ) ) ));
-    
-                    }
+                    
                     $komentator  = $value->find('div[class="TSUbDb"]',0);
                     $ulasan_ = $value->find('div[class="Jtu6Td"]',0) ;
                     if(count($value->find('div[data-sq-below-review]')) > 0){                    

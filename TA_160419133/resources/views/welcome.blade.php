@@ -6,12 +6,35 @@
     {{ session('success') }}
 </div>
 @endif
+<style>
+    .logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        width: 80px;
+        height: auto;
+        margin-right: 10px;
+    }
+</style>
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <div class="col-md-2">
+        <div class="logo-container">
+            <img class="logo" src="{{ asset('assets/img/logo UBAYA.png') }}" alt="Logo 1">
+            <img class="logo" src="{{ asset('assets/img/logo BUMDESA.png') }}" alt="Logo 2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="mt-4"><strong>SUMBER GEMPONG</strong></h1>
+            <h3 class="mt-4">Selamat datang di website analisis sentimen tempat wisata Sumber Gempong Trawas</h3>
+        </div>
 
-    <h1 class="mt-4"><strong>SUMBER GEMPONG</strong></h1>
-    <h3 class="mt-4">Selamat datang di website analisis sentimen tempat wisata Sumber Gempong Trawas</h3>
+    </div>
+
 </head>
 
 <body>
