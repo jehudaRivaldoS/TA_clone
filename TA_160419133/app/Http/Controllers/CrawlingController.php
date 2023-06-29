@@ -53,9 +53,9 @@ class CrawlingController extends Controller
         }
         if(in_array('twitter', $aplikasi))
         {
-            // $twi = 2;
-            // $tw = $us->crawlTw($start, $end, $api);
-            // $us->insertDB($tw,$twi);
+            $twi = 2;
+            $tw = $us->crawlTw($start, $end, $api);
+            $us->insertDB($tw,$twi);
         }
         return redirect()->back();
     }    
