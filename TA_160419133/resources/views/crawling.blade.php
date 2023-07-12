@@ -70,10 +70,12 @@
                 Google
                 Maps
                 Review</label><br>
-            <input type="checkbox" id="aplikasi2" name="aplikasi[]" value="ig"><label for="myCheckbox"> &nbsp;
-                Instagram</label><br>
-            <input type="checkbox" id="aplikasi3" name="aplikasi[]" value="twitter"><label for="myCheckbox">&nbsp;
-                Twitter</label><br>
+            <input type="checkbox" id="aplikasi2" name="aplikasi[]" value="ig" @disabled(true)><label for="myCheckbox">
+                &nbsp;
+                Instagram (Belum dapat digunakan)</label><br>
+            <input type="checkbox" id="aplikasi3" name="aplikasi[]" value="twitter" @disabled(true)><label
+                for="myCheckbox">&nbsp;
+                Twitter (Belum dapat digunakan)</label><br>
 
         </div>
     </div>
