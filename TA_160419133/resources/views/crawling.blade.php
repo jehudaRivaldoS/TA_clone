@@ -62,9 +62,12 @@
     </div>
     @endif
     <h1 class="mt-4"><strong>CRAWLING DATA</strong></h1><br>
-    <h4 class="mt-4"><strong>Sumber : </strong></h4>
     <div class="row">
-        <div class="col-md-12">
+        <h4 class="col-md-5"><strong>Sumber : </strong></h4>
+        <h4 class="col-md-7"><strong>Input Data Ulasan Manual : </strong></h4>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
             <input type="checkbox" id="aplikasi1" name="aplikasi[]" value="googlem" checked><label
                 for="myCheckbox">&nbsp;
                 Google
@@ -78,9 +81,15 @@
                 Twitter (Belum dapat digunakan)</label><br>
 
         </div>
+        <div class="col-md-7">
+            <label>Data Ulasan : &nbsp;&nbsp;</label><input type="text" name="ulasan_m" id="ulasan_m"
+                style="width: 75%;"><br><br>
+            <label>Tanggal : &nbsp;&nbsp;</label><input type="date" id="tgl_m" name="tgl_m" value="">
+
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-5">
             <h4><strong>Masukkan Tanggal : </strong></h4>
             <label for="mulai">Start Date : </label>
             <input type="date" id="mulai" name="mulai" value="">
@@ -94,6 +103,10 @@
             <div id="loader" style="display:none;">
                 <div class="loader"></div>
             </div>
+
+        </div>
+        <div class="col-md-7">
+            <br><button type="button" id="add" class="btn btn-success">SIMPAN</button>
         </div>
     </div>
 
@@ -223,6 +236,39 @@
     }
 </script>
 <script>
+    $("#add").on('click', function(e){        
+        var data =  $("#ulasan_m").val();
+        var tanggal =  $("#tgl_m").val();
+
+        if(data == '')
+        {
+            alert('Data ulasan harus diisi!');
+        }
+        else
+        {
+            if(tanggal == '')
+            {
+                alert('Tanggal harus diisi!');
+            }
+            else
+            {
+                var url_api = 'crawling/'+data+'/'+tanggal;
+    
+                $.ajax({
+                    type: 'GET',
+                    url: url_api,
+                    success: function (data) {     
+                        kosongkanInput();            
+                        location.reload();                                            
+                    }                    
+                });  
+            }
+        }
+    });
+    function kosongkanInput() {
+        document.getElementById("ulasan_m").value = "";
+        document.getElementById("tgl_m").value = "";
+    }
     $("#startcrawl").on('click',function (e){
         e.preventDefault(); 
         var loader = $("#loader");        

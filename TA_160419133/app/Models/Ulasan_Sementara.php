@@ -226,6 +226,17 @@ class Ulasan_Sementara extends Model
             $us->save();
         }
     }
+    public function insertDBM($data, $tgl)
+    {
+        set_time_limit(600);
+                 
+        $us = new Ulasan_Sementara();
+        $us->komentar = $data;
+        $us->tanggal = $tgl;
+        $us->aplikasi_id = 3;
+
+        $us->save();   
+    }
 
     public function deleteDB()
     {

@@ -16,6 +16,7 @@ Route::get('/', 'SentimentController@index')->middleware('auth');
 
 Route::get('/crawling','CrawlingController@index')->middleware('auth');
 Route::get('/crawling/{mulai}/{akhir}/{aplikasi}','CrawlingController@create')->middleware('auth');
+Route::get('/crawling/{ulasan}/{tgl}','CrawlingController@manual')->middleware('auth');
 
 Route::get('/analysis','AnalysisController@index')->middleware('auth');
 

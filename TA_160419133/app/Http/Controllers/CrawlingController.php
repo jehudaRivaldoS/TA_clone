@@ -30,13 +30,31 @@ class CrawlingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function manual($ulasan, $tgl)
+    {
+        set_time_limit(6000);
+        $api = new Client();
+        $us = new Ulasan_Sementara(); 
+        $check = Ulasan_Sementara::check();
+        if($check == 0)
+        {
+            $us->deleteDB();
+        }               
+        $us->insertDBM($ulasan,$tgl);
+        return redirect()->back();
+    }
     public function create($start, $end, $apl)
     {        
         $api = new Client();
         set_time_limit(6000);
         $us = new Ulasan_Sementara();
-        $us->deleteDB();
-
+        $check = Ulasan_Sementara::check();
+        
+        if($check == 0)
+        {
+            $us->deleteDB();
+        }    
+        
         $aplikasi = explode(',', $apl);
 
         if(in_array('googlem', $aplikasi))
